@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 
 import 'config/app_data_config.dart';
 import 'firebase_options.dart';
@@ -18,28 +19,24 @@ Future<void> main() async {
     );
   }
 
-  final cartProvider = CartProvider();
-  final orderProvider = OrderProvider();
-
   runApp(
-    MiniCommerceApp(cartProvider: cartProvider, orderProvider: orderProvider),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => OrderProvider()),
+      ],
+      child: const MiniCommerceApp(),
+    ),
   );
 }
 
 class MiniCommerceApp extends StatelessWidget {
-  const MiniCommerceApp({
-    super.key,
-    required this.cartProvider,
-    required this.orderProvider,
-  });
-
-  final CartProvider cartProvider;
-  final OrderProvider orderProvider;
+  const MiniCommerceApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      title: 'Mini Commerce App',
+      title: 'N7-TH4-CommerceApp',
       debugShowCheckedModeBanner: false,
       home: HomeScreen(),
     );
