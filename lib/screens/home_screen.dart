@@ -6,6 +6,7 @@ import '../services/mock_product_service.dart';
 import '../widgets/banner_carousel.dart';
 import '../widgets/category_grid_scroller.dart';
 import '../widgets/product_card.dart';
+import 'product_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -44,14 +45,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onScroll() {
-    if (_scrollController.position.pixels == _scrollController.position.maxScrollExtent) {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
       if (!_isLoadingMore && _hasMoreProducts) {
         _loadMoreProducts();
       }
     }
   }
 
-  Future<void> _loadProducts({String? categoryFilter, String? searchKeyword, bool refresh = false}) async {
+  Future<void> _loadProducts({
+    String? categoryFilter,
+    String? searchKeyword,
+    bool refresh = false,
+  }) async {
     if (refresh) {
       _currentPage = 1;
       _hasMoreProducts = true;
@@ -75,9 +81,9 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Lỗi tải dữ liệu: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Lỗi tải dữ liệu: $e')));
       }
     } finally {
       setState(() {
@@ -105,9 +111,9 @@ class _HomeScreenState extends State<HomeScreen> {
       });
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Lỗi tải thêm dữ liệu: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Lỗi tải thêm dữ liệu: $e')));
       }
     } finally {
       setState(() {
@@ -180,7 +186,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           onPressed: () {
                             // TODO: Navigate to cart screen
                           },
-                          icon: const Icon(Icons.shopping_cart, color: Colors.white),
+                          icon: const Icon(
+                            Icons.shopping_cart,
+                            color: Colors.white,
+                          ),
                         ),
                         if (cartCount > 0)
                           Positioned(
@@ -219,7 +228,11 @@ class _HomeScreenState extends State<HomeScreen> {
             // Sticky Search Bar
             SliverPersistentHeader(
               pinned: true,
-              delegate: _SearchBarDelegate(_searchController, _onSearchChanged, _searchKeyword),
+              delegate: _SearchBarDelegate(
+                _searchController,
+                _onSearchChanged,
+                _searchKeyword,
+              ),
             ),
 
             // Body content
@@ -255,12 +268,14 @@ class _HomeScreenState extends State<HomeScreen> {
                               onCategorySelected: _onCategorySelected,
                             ),
                           ),
-                        if (_searchKeyword.isEmpty)
-                          const SizedBox(height: 12),
+                        if (_searchKeyword.isEmpty) const SizedBox(height: 12),
 
                         // Title "Sản phẩm nổi bật"
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 12,
+                          ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
@@ -286,18 +301,25 @@ class _HomeScreenState extends State<HomeScreen> {
                               physics: const NeverScrollableScrollPhysics(),
                               gridDelegate:
                                   const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                mainAxisSpacing: 12,
-                                crossAxisSpacing: 12,
-                                childAspectRatio: 0.56,
-                              ),
+                                    crossAxisCount: 2,
+                                    mainAxisSpacing: 12,
+                                    crossAxisSpacing: 12,
+                                    childAspectRatio: 0.56,
+                                  ),
                               itemCount: _products.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final Product product = _products[index];
                                 return ProductCard(
                                   product: product,
                                   onTap: () {
-                                    // TODO: Navigate to product detail
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => ProductDetailScreen(
+                                          product: product,
+                                        ),
+                                      ),
+                                    );
                                   },
                                   onAddToCart: () {
                                     _onAddToCart(product);
@@ -338,7 +360,11 @@ class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
   final String searchKeyword;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     return Container(
       color: Colors.white,
       padding: const EdgeInsets.all(12),
@@ -370,7 +396,10 @@ class _SearchBarDelegate extends SliverPersistentHeaderDelegate {
             borderRadius: BorderRadius.circular(12),
             borderSide: const BorderSide(color: Color(0xFFFF5722), width: 1.5),
           ),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+          contentPadding: const EdgeInsets.symmetric(
+            horizontal: 12,
+            vertical: 12,
+          ),
         ),
       ),
     );
