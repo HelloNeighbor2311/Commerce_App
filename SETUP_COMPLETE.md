@@ -114,7 +114,7 @@ git commit -m "Add Firebase keys"
 git push
 
 # ❌ SAI - Hardcode keys trong code
-const apiKey = "REDACTED_GOOGLE_API_KEY";
+const apiKey = "YOUR_API_KEY_HERE";
 
 # ❌ SAI - Commit firebase_options.dart nếu có keys
 git add lib/firebase_options.dart
