@@ -1,20 +1,47 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class FirebaseConfig {
   const FirebaseConfig._();
 
-  static const String webApiKey = 'AIzaSyBVbDgIG3ah9PByiVpS3N3_IaiA1W6ceuI';
-  static const String webAppId = '1:131409528913:web:0f817d2e389f6e5a1dd070';
-  static const String webMessagingSenderId = '131409528913';
-  static const String webProjectId = 'commerceapp-30c05';
-  static const String webAuthDomain = 'commerceapp-30c05.firebaseapp.com';
-  static const String webStorageBucket =
-      'commerceapp-30c05.firebasestorage.app';
-  static const String webMeasurementId = 'G-41E5VQT08V';
+  static String _env(String key, String fallback) {
+    final String? value = dotenv.env[key];
+    if (value == null || value.isEmpty) {
+      return fallback;
+    }
+    return value;
+  }
 
-  static const String androidApiKey = 'AIzaSyC4AxkQRvwn2GRrfkGPlpO1GnDzzGWKWJw';
-  static const String androidAppId =
-      '1:131409528913:android:646f00ccc94723dd1dd070';
-  static const String androidMessagingSenderId = '131409528913';
-  static const String androidProjectId = 'commerceapp-30c05';
-  static const String androidStorageBucket =
-      'commerceapp-30c05.firebasestorage.app';
+  static String get webApiKey =>
+      _env('FIREBASE_WEB_API_KEY', 'AIzaSyBVbDgIG3ah9PByiVpS3N3_IaiA1W6ceuI');
+  static String get webAppId =>
+      _env('FIREBASE_WEB_APP_ID', '1:131409528913:web:0f817d2e389f6e5a1dd070');
+  static String get webMessagingSenderId =>
+      _env('FIREBASE_WEB_MESSAGING_SENDER_ID', '131409528913');
+  static String get webProjectId =>
+      _env('FIREBASE_WEB_PROJECT_ID', 'commerceapp-30c05');
+  static String get webAuthDomain =>
+      _env('FIREBASE_WEB_AUTH_DOMAIN', 'commerceapp-30c05.firebaseapp.com');
+  static String get webStorageBucket => _env(
+    'FIREBASE_WEB_STORAGE_BUCKET',
+    'commerceapp-30c05.firebasestorage.app',
+  );
+  static String get webMeasurementId =>
+      _env('FIREBASE_WEB_MEASUREMENT_ID', 'G-41E5VQT08V');
+
+  static String get androidApiKey => _env(
+    'FIREBASE_ANDROID_API_KEY',
+    'AIzaSyC4AxkQRvwn2GRrfkGPlpO1GnDzzGWKWJw',
+  );
+  static String get androidAppId => _env(
+    'FIREBASE_ANDROID_APP_ID',
+    '1:131409528913:android:646f00ccc94723dd1dd070',
+  );
+  static String get androidMessagingSenderId =>
+      _env('FIREBASE_ANDROID_MESSAGING_SENDER_ID', '131409528913');
+  static String get androidProjectId =>
+      _env('FIREBASE_ANDROID_PROJECT_ID', 'commerceapp-30c05');
+  static String get androidStorageBucket => _env(
+    'FIREBASE_ANDROID_STORAGE_BUCKET',
+    'commerceapp-30c05.firebasestorage.app',
+  );
 }
