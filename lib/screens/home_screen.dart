@@ -8,6 +8,7 @@ import '../widgets/banner_carousel.dart';
 import '../widgets/category_grid_scroller.dart';
 import '../widgets/product_card.dart';
 import 'cart_screen.dart';
+import 'order_history_screen.dart';
 import 'product_detail_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -148,6 +149,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
               actions: <Widget>[
+                IconButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute<void>(
+                        builder: (_) => const OrderHistoryScreen(),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.history),
+                  color: _isCollapsed ? Colors.white : Colors.black87,
+                  tooltip: 'Lịch sử đơn hàng',
+                ),
                 Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Consumer<CartProvider>(
