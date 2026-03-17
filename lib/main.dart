@@ -1,10 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import 'config/app_data_config.dart';
+import 'config/firebase_config.dart';
+import 'firebase_options.dart';
 import 'providers/cart_provider.dart';
 import 'providers/order_provider.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Load environment variables từ .env file
+  await FirebaseConfig.load();
+
+  if (AppDataConfig.useFirebase) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  }
 
   final cartProvider = CartProvider();
   final orderProvider = OrderProvider();

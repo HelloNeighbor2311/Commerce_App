@@ -9,7 +9,7 @@ class OrderProvider extends ChangeNotifier {
 
   final FirestoreOrderService _firestoreOrderService;
   final List<OrderItem> _orders = <OrderItem>[];
-  bool _isLoading = false;
+  final bool _isLoading = false;
 
   List<OrderItem> get orders => List<OrderItem>.unmodifiable(_orders);
   bool get isLoading => _isLoading;

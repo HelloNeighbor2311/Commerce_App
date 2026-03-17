@@ -2,6 +2,8 @@ import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
+import 'config/firebase_config.dart';
+
 class DefaultFirebaseOptions {
   const DefaultFirebaseOptions._();
 
@@ -25,26 +27,27 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'REDACTED_GOOGLE_API_KEY',
-    appId: '1:131409528913:web:0f817d2e389f6e5a1dd070',
-    messagingSenderId: '131409528913',
-    projectId: 'commerceapp-30c05',
-    authDomain: 'commerceapp-30c05.firebaseapp.com',
-    storageBucket: 'commerceapp-30c05.firebasestorage.app',
-    measurementId: 'G-41E5VQT08V',
+  /// Web Firebase Options từ environment variables
+  static FirebaseOptions get web => FirebaseOptions(
+    apiKey: FirebaseConfig.webApiKey,
+    appId: FirebaseConfig.webAppId,
+    messagingSenderId: FirebaseConfig.webMessagingSenderId,
+    projectId: FirebaseConfig.webProjectId,
+    authDomain: FirebaseConfig.webAuthDomain,
+    storageBucket: FirebaseConfig.webStorageBucket,
+    measurementId: FirebaseConfig.webMeasurementId,
   );
 
-  // Replace these placeholders by running: flutterfire configure
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'REDACTED_GOOGLE_API_KEY',
-    appId: '1:131409528913:android:646f00ccc94723dd1dd070',
-    messagingSenderId: '131409528913',
-    projectId: 'commerceapp-30c05',
-    storageBucket: 'commerceapp-30c05.firebasestorage.app',
+  /// Android Firebase Options từ environment variables
+  static FirebaseOptions get android => FirebaseOptions(
+    apiKey: FirebaseConfig.androidApiKey,
+    appId: FirebaseConfig.androidAppId,
+    messagingSenderId: FirebaseConfig.androidMessagingSenderId,
+    projectId: FirebaseConfig.androidProjectId,
+    storageBucket: FirebaseConfig.androidStorageBucket,
   );
 
+  // iOS, macOS, Windows, Linux - Replace with real config khi cần
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'REPLACE_ME',
     appId: 'REPLACE_ME',
