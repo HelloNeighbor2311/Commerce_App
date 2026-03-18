@@ -1,14 +1,10 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 class FirebaseConfig {
   const FirebaseConfig._();
 
   static String _env(String key, String fallback) {
-    final String? value = dotenv.env[key];
-    if (value == null || value.isEmpty) {
-      return fallback;
-    }
-    return value;
+    // No runtime env loader configured. Trả về fallback cố định.
+    // Nếu bạn muốn dùng dotenv, thêm package flutter_dotenv vào pubspec và gọi dotenv.load tại main.
+    return fallback;
   }
 
   static String get webApiKey =>

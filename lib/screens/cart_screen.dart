@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 import '../models/cart_line_item.dart';
 import '../providers/cart_provider.dart';
+import 'checkout_screen.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -55,7 +56,7 @@ class CartScreen extends StatelessWidget {
           return ListView.separated(
             padding: const EdgeInsets.fromLTRB(12, 12, 12, 120),
             itemCount: items.length,
-            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            separatorBuilder: (_, _) => const SizedBox(height: 10),
             itemBuilder: (BuildContext context, int index) {
               final CartLineItem item = items[index];
 
@@ -146,9 +147,11 @@ class CartScreen extends StatelessWidget {
                   child: ElevatedButton(
                     onPressed: cart.selectedTotalAmount > 0
                         ? () {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                content: Text(''),
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute<void>(
+                                builder: (_) =>
+                                    CheckoutScreen(items: cart.selectedItems),
                               ),
                             );
                           }
@@ -236,7 +239,7 @@ class _CartItemTile extends StatelessWidget {
                 width: 76,
                 height: 76,
                 fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => Container(
+                errorBuilder: (_, _, _) => Container(
                   width: 76,
                   height: 76,
                   color: const Color(0xFFF2F2F2),
